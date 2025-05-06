@@ -1,12 +1,17 @@
 import tkinter as tk
+from tkinter import ttk
+from ventana_seleccion import abrir_ventana_seleccion
 
 def iniciar_simulacion():
-    print("¡Iniciando la simulación!")
-    # Aquí iría la lógica para cargar la siguiente pantalla o iniciar la simulación
+    ventana.withdraw()  # Oculta la ventana principal
+    abrir_ventana_seleccion(ventana)
 
 def mostrar_tutorial():
     print("Mostrando el tutorial...")
     # Aquí iría la lógica para mostrar la pantalla de tutorial
+
+def cerrar_aplicacion():
+    ventana.destroy()
 
 def salir():
     ventana.destroy()
@@ -16,6 +21,9 @@ ventana = tk.Tk()
 ventana.title("simul")
 ventana.geometry("400x350")
 ventana.configure(bg="#f0f0f0")
+
+# Protocolo de cierre para la ventana principal
+ventana.protocol("WM_DELETE_WINDOW", cerrar_aplicacion)
 
 # Título principal con fuente moderna
 titulo = tk.Label(ventana, text="SimuGraph", font=("Segoe UI", 24, "bold"), bg="#f0f0f0", fg="#333")
@@ -32,7 +40,7 @@ radio_pelota = 15
 pelota = canvas_caida.create_oval(canvas_ancho/2 - radio_pelota, 10, canvas_ancho/2 + radio_pelota, 10 + 2*radio_pelota, fill="orange")
 
 # Función para animar la caída y el rebote
-velocidad_y = 5  # Velocidad inicial vertical
+velocidad_y = 5   # Velocidad inicial vertical
 gravedad = 0.5
 amortiguacion = 1 # Factor de amortiguación para el rebote
 
@@ -65,7 +73,7 @@ boton_iniciar.pack(pady=5)
 boton_tutorial = tk.Button(ventana, text="Tutorial", command=mostrar_tutorial, width=20, height=2, bg="#2196F3", fg="white", font=("Segoe UI", 10))
 boton_tutorial.pack(pady=5)
 
-boton_salir = tk.Button(ventana, text="Salir", command=salir, width=20, height=2, bg="#f44336", fg="white", font=("Segoe UI", 10))
+boton_salir = tk.Button(ventana, text="Salir", command=cerrar_aplicacion, width=20, height=2, bg="#f44336", fg="white", font=("Segoe UI", 10))
 boton_salir.pack(pady=10)
 
 # Ejecutar el bucle principal de la ventana
